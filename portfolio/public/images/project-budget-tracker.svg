@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="#050510"/>
+  <rect x="60" y="60" width="1080" height="680" rx="16" fill="#0a1018" stroke="url(#g)" stroke-width="1.5"/>
+  <rect x="100" y="120" width="480" height="280" rx="8" fill="#111827" stroke="#fbbf24" stroke-width="1"/>
+  <rect x="130" y="280" width="60" height="90" rx="4" fill="#fbbf24" opacity="0.7"/>
+  <rect x="210" y="240" width="60" height="130" rx="4" fill="#fbbf24" opacity="0.5"/>
+  <rect x="290" y="200" width="60" height="170" rx="4" fill="#fbbf24" opacity="0.85"/>
+  <rect x="370" y="260" width="60" height="110" rx="4" fill="#fbbf24" opacity="0.4"/>
+  <rect x="450" y="220" width="60" height="150" rx="4" fill="#fbbf24" opacity="0.6"/>
+  <rect x="620" y="120" width="480" height="130" rx="8" fill="#0f172a"/>
+  <text x="650" y="175" fill="#fbbf24" font-family="system-ui" font-size="28" font-weight="700">$24,580</text>
+  <text x="650" y="205" fill="#64748b" font-family="system-ui" font-size="14">Total balance � On track</text>
+  <rect x="620" y="280" width="230" height="280" rx="8" fill="#111827"/>
+  <circle cx="735" cy="420" r="80" fill="none" stroke="#fbbf24" stroke-width="16" stroke-dasharray="320 120" transform="rotate(-90 735 420)"/>
+  <rect x="880" y="280" width="220" height="130" rx="8" fill="#111827"/>
+  <rect x="880" y="430" width="220" height="130" rx="8" fill="#111827"/>
+  <text x="100" y="760" fill="#fbbf24" font-family="system-ui" font-size="16" opacity="0.7">Budget &amp; Expense Tracker � Financial Operations</text>
+</svg>

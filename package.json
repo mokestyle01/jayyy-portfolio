@@ -1,0 +1,14 @@
+{
+  "name": "fathia",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix portfolio",
+    "build": "npm run build --prefix portfolio",
+    "start": "npm run start --prefix portfolio",
+    "lint": "npm run lint --prefix portfolio",
+    "install:portfolio": "npm install --prefix portfolio"
+  },
+  "dependencies": {
+    "framer-motion": "^12.38.0"
+  }
+}

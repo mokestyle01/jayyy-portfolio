@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#e879f9"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="#020208"/>
+  <ellipse cx="600" cy="900" rx="700" ry="400" fill="url(#g)" opacity="0.2"/>
+  <text x="120" y="280" fill="#fff" font-family="system-ui" font-size="96" font-weight="900" letter-spacing="-4">AURORA</text>
+  <text x="120" y="340" fill="#22d3ee" font-family="system-ui" font-size="24" letter-spacing="12">CREATIVE STUDIO</text>
+  <rect x="120" y="400" width="400" height="4" fill="url(#g)"/>
+  <rect x="700" y="180" width="380" height="420" rx="4" fill="#0a0a14" stroke="url(#g)" stroke-width="1"/>
+</svg>

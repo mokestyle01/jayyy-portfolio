@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="#050510"/>
+  <rect x="60" y="60" width="1080" height="680" rx="16" fill="#0a1218" stroke="url(#g)" stroke-width="1.5"/>
+  <rect x="100" y="120" width="280" height="560" rx="8" fill="#111827"/>
+  <rect x="100" y="140" width="240" height="36" rx="6" fill="#34d399" opacity="0.3"/>
+  <rect x="100" y="190" width="240" height="28" rx="4" fill="#1f2937"/>
+  <rect x="100" y="230" width="240" height="28" rx="4" fill="#1f2937"/>
+  <rect x="100" y="270" width="240" height="28" rx="4" fill="#34d399" opacity="0.2"/>
+  <rect x="420" y="120" width="680" height="200" rx="8" fill="#0f172a" stroke="#34d399" stroke-width="1"/>
+  <text x="450" y="200" fill="#34d399" font-family="system-ui" font-size="42" font-weight="700">Pipeline</text>
+  <rect x="450" y="230" width="120" height="60" rx="6" fill="#34d399" opacity="0.25"/>
+  <rect x="590" y="230" width="120" height="60" rx="6" fill="#1e3a2f"/>
+  <rect x="730" y="230" width="120" height="60" rx="6" fill="#1e3a2f"/>
+  <rect x="870" y="230" width="120" height="60" rx="6" fill="#1e3a2f"/>
+  <rect x="420" y="360" width="320" height="320" rx="8" fill="#111827"/>
+  <polyline points="460,600 520,520 600,540 680,460 760,480" fill="none" stroke="#34d399" stroke-width="3"/>
+  <rect x="780" y="360" width="320" height="150" rx="8" fill="#111827"/>
+  <rect x="780" y="530" width="320" height="150" rx="8" fill="#111827"/>
+  <text x="100" y="760" fill="#34d399" font-family="system-ui" font-size="16" opacity="0.7">HR Tracking System � Business Operations</text>
+</svg>

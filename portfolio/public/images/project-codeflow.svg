@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#0a0a12"/>
+  <rect x="100" y="80" width="1000" height="640" rx="12" fill="#111118" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+  <rect x="100" y="80" width="1000" height="48" rx="12" fill="#1a1a24"/>
+  <circle cx="130" cy="104" r="8" fill="#ef4444"/><circle cx="158" cy="104" r="8" fill="#eab308"/><circle cx="186" cy="104" r="8" fill="#22c55e"/>
+  <text x="140" y="200" fill="#64748b" font-family="monospace" font-size="16">1</text>
+  <text x="140" y="240" fill="#64748b" font-family="monospace" font-size="16">2</text>
+  <text x="140" y="280" fill="#64748b" font-family="monospace" font-size="16">3</text>
+  <text x="180" y="200" fill="#a78bfa" font-family="monospace" font-size="18">const</text>
+  <text x="250" y="200" fill="#22d3ee" font-family="monospace" font-size="18">app</text>
+  <text x="300" y="200" fill="#f0f0f5" font-family="monospace" font-size="18">=</text>
+  <text x="330" y="200" fill="#e879f9" font-family="monospace" font-size="18">AI.build()</text>
+  <text x="180" y="240" fill="#94a3b8" font-family="monospace" font-size="16">// Generated in 2.3s</text>
+  <rect x="180" y="310" width="500" height="200" rx="8" fill="#0f172a" stroke="#a78bfa" stroke-width="1"/>
+  <text x="200" y="350" fill="#22d3ee" font-family="monospace" font-size="14"> Component optimized</text>
+  <text x="200" y="380" fill="#22d3ee" font-family="monospace" font-size="14"> Tests passing</text>
+  <text x="200" y="410" fill="#22d3ee" font-family="monospace" font-size="14"> Deploy ready</text>
+</svg>
