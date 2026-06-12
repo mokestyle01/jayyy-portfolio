@@ -1,13 +1,5 @@
-import path from "path";
-import { fileURLToPath } from "url";
-
-const portfolioRoot = path.dirname(fileURLToPath(import.meta.url));
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  turbopack: {
-    root: portfolioRoot,
-  },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
