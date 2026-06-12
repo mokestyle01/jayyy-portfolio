@@ -1,6 +1,6 @@
 @echo off
 title Jayyy Portfolio - Dev Server
-cd /d "%~dp0portfolio"
+cd /d "%~dp0"
 echo.
 echo  Jayyy Portfolio
 echo  ---------------
