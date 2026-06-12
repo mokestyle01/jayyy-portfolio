@@ -1,14 +1,12 @@
 {
-  "name": "fathia",
+  "name": "jayyy-portfolio",
   "private": true,
   "scripts": {
+    "postinstall": "npm install --prefix portfolio",
+    "setup": "npm install --prefix portfolio",
     "dev": "npm run dev --prefix portfolio",
-    "build": "npm run build --prefix portfolio",
+    "build": "npm install --prefix portfolio && npm run build --prefix portfolio",
     "start": "npm run start --prefix portfolio",
-    "lint": "npm run lint --prefix portfolio",
-    "install:portfolio": "npm install --prefix portfolio"
-  },
-  "dependencies": {
-    "framer-motion": "^12.38.0"
+    "lint": "npm run lint --prefix portfolio"
   }
 }

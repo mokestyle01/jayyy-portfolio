@@ -1,8 +1,27 @@
 import type { Metadata } from "next";
 import { projects, site } from "@/lib/data";
 
-export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://jayyy.dev";
+/** Production URL used for SEO, sitemap, Open Graph, and structured data. */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+
+  const production = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (production) {
+    const host = production.replace(/^https?:\/\//, "");
+    return `https://${host}`;
+  }
+
+  const preview = process.env.VERCEL_URL?.trim();
+  if (preview) {
+    const host = preview.replace(/^https?:\/\//, "");
+    return `https://${host}`;
+  }
+
+  return "http://localhost:3000";
+}
+
+export const siteUrl = resolveSiteUrl();
 
 export const seoKeywords = [
   "Jayyy digital solutions",
