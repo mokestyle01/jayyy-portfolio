@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { projects, site } from "@/lib/data";
+import { projects, site, contactContent } from "@/lib/data";
 
 /** Production URL used for SEO, sitemap, Open Graph, and structured data. */
 function resolveSiteUrl(): string {
@@ -24,34 +24,33 @@ function resolveSiteUrl(): string {
 export const siteUrl = resolveSiteUrl();
 
 export const seoKeywords = [
-  "Jayyy digital solutions",
+  "Jayyy portfolio",
+  "AI-powered websites",
+  "creative developer portfolio",
+  "premium web design",
+  "dashboard development",
+  "digital agency portfolio",
+  "modern website developer",
+  "AI web experiences",
+  "business website design",
+  "portfolio websites",
+  "freelance web developer",
+  "data dashboard design",
   "digital solutions builder",
-  "business automation consultant",
-  "Excel business systems",
-  "AI workflow automation",
-  "dashboard creation services",
-  "data analysis and reporting",
-  "workflow optimization",
-  "operational management tools",
-  "digital transformation consultant",
-  "modern business websites",
-  "KPI dashboard design",
-  "business process automation",
-  "custom Excel systems",
-  "business intelligence solutions",
+  "Next.js developer",
+  "premium digital experiences",
 ] as const;
 
-const defaultTitle =
-  "Jayyy | Digital Solutions Builder — Websites, AI, Automation & Business Systems";
+const defaultTitle = "Jayyy | Building AI-Powered Digital Experiences";
 
 const defaultDescription =
-  "Jayyy helps businesses transform ideas, data, and processes into powerful digital solutions. Modern websites, AI automation, Excel systems, dashboards, and data-driven reporting for growth and efficiency.";
+  "Jayyy creates modern websites, dashboards, and intelligent digital solutions that help businesses stand out and grow. Premium creative developer portfolio.";
 
 export const defaultOgImage = {
   url: "/og-cover.svg",
   width: 1200,
   height: 630,
-  alt: "Jayyy — Digital Solutions Builder for business growth, automation, and data systems",
+  alt: "Jayyy — Building AI-Powered Digital Experiences",
 } as const;
 
 function buildOpenGraph(
@@ -161,16 +160,16 @@ export const projectsPageMetadata: Metadata = {
 
 export const contactPageMetadata: Metadata = {
   title: "Contact",
-  description: `Partner with ${site.name} to solve your next business challenge — websites, automation, Excel systems, dashboards, and workflow optimization.`,
+  description: `Partner with ${site.name} for freelance projects, AI-powered websites, dashboards, and digital experiences. Email ${site.email}.`,
   alternates: { canonical: "/#contact" },
   openGraph: buildOpenGraph(
-    `Contact ${site.name} | Start Your Digital Transformation`,
-    `Tell ${site.name} about your goals. Get a strategic response within 48 hours on websites, automation, systems, and data solutions.`,
+    `Contact ${site.name} | Let's Build Something Exceptional`,
+    contactContent.description,
     "/contact",
   ),
   twitter: buildTwitter(
-    `Contact ${site.name} | Digital Solutions Partner`,
-    `Reach out to ${site.name} for business-focused digital solutions — automation, systems, dashboards, and growth-ready websites.`,
+    `Contact ${site.name} | Get In Touch`,
+    `${contactContent.description} Reach out at ${site.email}.`,
   ),
 };
 
@@ -197,7 +196,7 @@ export function getStructuredData() {
         "@type": "WebSite",
         "@id": `${siteUrl}/#website`,
         url: siteUrl,
-        name: `${site.name} — Digital Solutions`,
+        name: `${site.name} — AI-Powered Digital Experiences`,
         description: defaultDescription,
         inLanguage: "en-US",
         publisher: { "@id": `${siteUrl}/#person` },
@@ -206,7 +205,7 @@ export function getStructuredData() {
         "@type": "ProfilePage",
         "@id": `${siteUrl}/#profile`,
         url: siteUrl,
-        name: `${site.name} — Digital Solutions Builder`,
+        name: `${site.name} — Creative Developer`,
         description: defaultDescription,
         mainEntity: { "@id": `${siteUrl}/#person` },
         inLanguage: "en-US",
@@ -217,17 +216,17 @@ export function getStructuredData() {
         name: site.name,
         url: siteUrl,
         email: site.email,
-        jobTitle: "Digital Solutions Builder",
-        description: site.tagline,
+        jobTitle: "Creative Developer & Digital Solutions Builder",
+        description: site.subheadline,
         knowsAbout: [
-          "Digital Transformation",
-          "Business Automation",
-          "Workflow Optimization",
-          "Excel Business Systems",
-          "Dashboard Creation",
-          "Data Analysis and Reporting",
-          "AI-Powered Solutions",
-          "Modern Websites",
+          "AI-Powered Websites",
+          "Dashboard Development",
+          "Modern Web Design",
+          "Portfolio Websites",
+          "Business Websites",
+          "Digital Experiences",
+          "Data Visualization",
+          "Creative Development",
         ],
         sameAs: Object.values(site.social),
         worksFor: {
@@ -238,8 +237,8 @@ export function getStructuredData() {
       {
         "@type": "ItemList",
         "@id": `${siteUrl}/#projects`,
-        name: "Business Solutions Portfolio",
-        description: "Digital solutions for growth, automation, and operational excellence",
+        name: "Selected Work Portfolio",
+        description: "AI websites, business platforms, dashboards, and portfolio projects",
         numberOfItems: projects.length,
         itemListElement: projectItems,
       },
@@ -249,15 +248,14 @@ export function getStructuredData() {
         name: `${site.name} Digital Solutions`,
         url: siteUrl,
         description:
-          "Modern websites, AI-powered automation, Excel business systems, dashboards, and data analysis for business growth.",
+          "Modern websites, AI-powered experiences, dashboards, and premium digital solutions for businesses and creatives.",
         areaServed: "Worldwide",
         serviceType: [
-          "Digital Transformation",
-          "Business Automation",
-          "Excel Business Systems",
-          "Dashboard Creation",
-          "Data Analysis and Reporting",
-          "Workflow Optimization",
+          "AI-Powered Websites",
+          "Business Websites",
+          "Dashboard Development",
+          "Portfolio Websites",
+          "Digital Experiences",
         ],
         provider: { "@id": `${siteUrl}/#person` },
       },

@@ -24,12 +24,12 @@ export function ProjectCard({
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
 
-  const rotateX = useSpring(useTransform(mouseY, [0, 1], [6, -6]), { stiffness: 200, damping: 22 });
-  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-6, 6]), { stiffness: 200, damping: 22 });
+  const rotateX = useSpring(useTransform(mouseY, [0, 1], [8, -8]), { stiffness: 200, damping: 22 });
+  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-8, 8]), { stiffness: 200, damping: 22 });
 
   const glowX = useSpring(useTransform(mouseX, [0, 1], [0, 100]), { stiffness: 150, damping: 20 });
   const glowY = useSpring(useTransform(mouseY, [0, 1], [0, 100]), { stiffness: 150, damping: 20 });
-  const glowBg = useMotionTemplate`radial-gradient(280px circle at ${glowX}% ${glowY}%, ${project.accent}33, transparent 70%)`;
+  const glowBg = useMotionTemplate`radial-gradient(300px circle at ${glowX}% ${glowY}%, ${project.accent}44, transparent 70%)`;
 
   function onMouseMove(e: React.MouseEvent) {
     if (reducedMotion) return;
@@ -52,7 +52,7 @@ export function ProjectCard({
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.08, ease: easeOut }}
-      whileHover={reducedMotion ? undefined : { y: -10 }}
+      whileHover={reducedMotion ? undefined : { y: -12 }}
       className="group relative"
     >
       <motion.div
@@ -69,7 +69,7 @@ export function ProjectCard({
         <div
           className="pointer-events-none absolute -inset-1 rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
           style={{
-            background: `linear-gradient(135deg, ${project.accent}55, transparent, ${project.accent}33)`,
+            background: `linear-gradient(135deg, ${project.accent}66, transparent, ${project.accent}44)`,
           }}
           aria-hidden
         />
@@ -86,14 +86,35 @@ export function ProjectCard({
           <div className="relative aspect-[16/10] overflow-hidden">
             <Image
               src={project.image}
-              alt={`${project.title} — ${project.category} project screenshot`}
+              alt={`${project.title} — ${project.category}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition duration-700 group-hover:scale-105"
+              className="object-cover transition duration-700 group-hover:scale-110"
               priority={priority}
               loading={priority ? "eager" : "lazy"}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020208] via-[#020208]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#020208] via-[#020208]/50 to-transparent" />
+
+            {/* Hover overlay with quick actions */}
+            <div className="absolute inset-0 flex items-center justify-center gap-3 bg-black/50 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+              <MagneticButton
+                href={project.demoUrl}
+                variant="primary"
+                external
+                className="!px-4 !py-2 !text-xs"
+              >
+                View Live
+              </MagneticButton>
+              <MagneticButton
+                href={project.githubUrl}
+                variant="ghost"
+                external
+                className="!px-4 !py-2 !text-xs !bg-white/10"
+              >
+                View Code
+              </MagneticButton>
+            </div>
+
             <span
               className="absolute left-4 top-4 rounded-full border px-3 py-1 text-xs font-semibold backdrop-blur-md"
               style={{
@@ -116,22 +137,22 @@ export function ProjectCard({
               </h3>
               <span className="shrink-0 font-mono text-xs text-zinc-500">{project.year}</span>
             </div>
-            <p className="mt-2.5 text-sm leading-relaxed text-zinc-400 line-clamp-3">
+            <p className="mt-2.5 text-sm leading-relaxed text-zinc-400 line-clamp-2">
               {project.description}
             </p>
 
-            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Solution highlights">
-              {project.tags.map((tag) => (
+            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Technologies used">
+              {project.techStack.map((tech) => (
                 <li
-                  key={tag}
-                  className="rounded-full border border-white/8 bg-white/5 px-2.5 py-1 text-xs text-zinc-400 transition group-hover:border-cyan-400/25"
+                  key={tech}
+                  className="rounded-full border border-cyan-400/15 bg-cyan-400/5 px-2.5 py-1 text-[11px] font-medium text-cyan-200/80 transition group-hover:border-cyan-400/30"
                 >
-                  {tag}
+                  {tech}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-5 flex gap-3">
+            <div className="mt-5 flex gap-3 lg:hidden">
               <MagneticButton
                 href={project.demoUrl}
                 variant="primary"
@@ -139,7 +160,7 @@ export function ProjectCard({
                 fullWidth
                 className="!px-4 !py-2.5 !text-xs"
               >
-                See it in action
+                View Live
               </MagneticButton>
               <MagneticButton
                 href={project.githubUrl}
@@ -148,7 +169,7 @@ export function ProjectCard({
                 fullWidth
                 className="!px-4 !py-2.5 !text-xs"
               >
-                View details
+                View Code
               </MagneticButton>
             </div>
           </div>

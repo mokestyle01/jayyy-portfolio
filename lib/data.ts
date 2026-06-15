@@ -1,11 +1,14 @@
 export const site = {
   name: "Jayyy",
-  title: "Jayyy — Digital Solutions Builder | Websites, AI, Automation & Business Systems",
+  title: "Jayyy — Building AI-Powered Digital Experiences",
   description:
-    "Jayyy helps businesses transform ideas, data, and processes into powerful digital solutions — driving growth, efficiency, and smarter decision-making.",
+    "I create modern websites, dashboards, and intelligent digital solutions that help businesses stand out and grow.",
+  headline: "Building AI-Powered Digital Experiences",
+  subheadline:
+    "I create modern websites, dashboards, and intelligent digital solutions that help businesses stand out and grow.",
   tagline:
-    "Jayyy helps businesses transform ideas, data, and processes into powerful digital solutions.",
-  email: "hello@jayyy.dev",
+    "I create modern websites, dashboards, and intelligent digital solutions that help businesses stand out and grow.",
+  email: "mokestudio381@gmail.com",
   location: "Available worldwide · Remote",
   social: {
     github: "https://github.com",
@@ -18,11 +21,9 @@ export const site = {
 export const navLinks = [
   { href: "/#home", label: "Home", id: "home" },
   { href: "/#about", label: "About", id: "about" },
+  { href: "/#projects", label: "Projects", id: "projects" },
   { href: "/#services", label: "Services", id: "services" },
-  { href: "/#business-systems", label: "Business Systems", id: "business-systems" },
-  { href: "/#projects", label: "Solutions", id: "projects" },
-  { href: "/#skills", label: "Capabilities", id: "skills" },
-  { href: "/#experience", label: "Experience", id: "experience" },
+  { href: "/#testimonials", label: "Testimonials", id: "testimonials" },
   { href: "/#contact", label: "Contact", id: "contact" },
 ] as const;
 
@@ -75,19 +76,18 @@ export const skillCategories = [
 ] as const;
 
 export const stats = [
-  { value: 40, suffix: "+", label: "Business solutions delivered" },
-  { value: 5, suffix: "+", label: "Years driving transformation" },
-  { value: 98, suffix: "%", label: "Client satisfaction rate" },
-  { value: 12, suffix: "", label: "Industries served" },
+  { value: 20, suffix: "+", label: "Projects Built", icon: "◆" },
+  { value: 15, suffix: "+", label: "AI-Powered Solutions", icon: "◎" },
+  { value: 12, suffix: "+", label: "Data & Dashboard Expertise", icon: "◫" },
+  { value: 25, suffix: "+", label: "Modern Web Experiences", icon: "◇" },
 ] as const;
 
 export type ProjectCategory =
   | "All"
-  | "SaaS"
-  | "AI"
-  | "Web"
-  | "Creative"
-  | "Business";
+  | "AI Websites"
+  | "Business Websites"
+  | "Dashboards"
+  | "Portfolio Projects";
 
 export type BusinessCategoryTag =
   | "Excel Solutions"
@@ -115,6 +115,7 @@ export type Project = {
   category: Exclude<ProjectCategory, "All">;
   year: string;
   tags: string[];
+  techStack: string[];
   image: string;
   demoUrl: string;
   githubUrl: string;
@@ -128,14 +129,15 @@ export const projects: Project[] = [
     slug: "nexus-analytics",
     title: "Nexus Analytics",
     description:
-      "A decision intelligence platform that gives growth teams real-time visibility into performance — turning complex data into clear actions that improve retention and revenue.",
-    category: "SaaS",
+      "A decision intelligence dashboard that gives growth teams real-time visibility into performance — turning complex data into clear actions.",
+    category: "Dashboards",
     year: "2025",
-    tags: ["Data Insights", "Performance Tracking", "Growth Strategy"],
+    tags: ["Data Insights", "KPI Tracking", "Growth"],
+    techStack: ["Next.js", "TypeScript", "Charts"],
     image: "/images/project-nexus.svg",
     demoUrl: "https://vercel.com",
     githubUrl: "https://github.com",
-    outcome: "+38% user retention",
+    outcome: "+38% retention",
     accent: "#22d3ee",
     featured: true,
   },
@@ -143,10 +145,11 @@ export const projects: Project[] = [
     slug: "synth-ai-studio",
     title: "Synth AI Studio",
     description:
-      "An AI solutions brand positioned for rapid market traction — designed to communicate value instantly, accelerate lead generation, and scale demo conversions.",
-    category: "AI",
+      "An AI-powered brand website designed to communicate value instantly, accelerate lead generation, and scale demo conversions.",
+    category: "AI Websites",
     year: "2025",
-    tags: ["AI Automation", "Lead Generation", "Digital Growth"],
+    tags: ["AI Brand", "Lead Gen", "Motion Design"],
+    techStack: ["Next.js", "Framer Motion", "AI"],
     image: "/images/project-synth.svg",
     demoUrl: "https://vercel.com",
     githubUrl: "https://github.com",
@@ -158,14 +161,15 @@ export const projects: Project[] = [
     slug: "meridian-pay",
     title: "Meridian Pay",
     description:
-      "A financial operations platform that simplifies payment monitoring and gives enterprise teams the clarity they need to manage transactions with confidence.",
-    category: "SaaS",
+      "A premium business website for a fintech platform — built to establish trust, showcase product value, and drive enterprise inquiries.",
+    category: "Business Websites",
     year: "2024",
-    tags: ["Financial Visibility", "Operational Control", "Decision Support"],
+    tags: ["Fintech", "Enterprise", "Conversion"],
+    techStack: ["Next.js", "Tailwind", "SEO"],
     image: "/images/project-meridian.svg",
     demoUrl: "https://vercel.com",
     githubUrl: "https://github.com",
-    outcome: "$2.4M/mo processed",
+    outcome: "$2.4M/mo volume",
     accent: "#38bdf8",
     featured: true,
   },
@@ -173,10 +177,11 @@ export const projects: Project[] = [
     slug: "aurora-creative",
     title: "Aurora Creative",
     description:
-      "A premium digital presence for a creative agency — built to elevate brand perception, showcase work powerfully, and convert high-value client inquiries.",
-    category: "Creative",
+      "A stunning agency portfolio with cinematic scroll animations, case study showcases, and a premium brand experience.",
+    category: "Portfolio Projects",
     year: "2024",
-    tags: ["Brand Growth", "Client Acquisition", "Digital Presence"],
+    tags: ["Creative Agency", "Showcase", "Brand"],
+    techStack: ["Next.js", "GSAP", "Three.js"],
     image: "/images/project-aurora.svg",
     demoUrl: "https://vercel.com",
     githubUrl: "https://github.com",
@@ -188,14 +193,15 @@ export const projects: Project[] = [
     slug: "codeflow-ai",
     title: "Codeflow AI",
     description:
-      "A go-to-market digital solution for an AI productivity tool — structured to build trust, communicate efficiency gains, and drive qualified waitlist growth.",
-    category: "AI",
+      "A go-to-market AI product website — structured to build trust, communicate efficiency gains, and drive qualified waitlist growth.",
+    category: "AI Websites",
     year: "2024",
-    tags: ["Workflow Efficiency", "AI Positioning", "Market Launch"],
+    tags: ["AI Product", "Waitlist", "SaaS Launch"],
+    techStack: ["Next.js", "OpenAI", "Vercel"],
     image: "/images/project-codeflow.svg",
     demoUrl: "https://vercel.com",
     githubUrl: "https://github.com",
-    outcome: "12k waitlist signups",
+    outcome: "12k signups",
     accent: "#22d3ee",
     featured: true,
   },
@@ -203,29 +209,31 @@ export const projects: Project[] = [
     slug: "prism-portfolio",
     title: "Prism Portfolio Engine",
     description:
-      "A scalable platform enabling creatives to launch polished digital presences faster — reducing time-to-market while maintaining premium brand standards.",
-    category: "Web",
+      "A scalable portfolio platform enabling creatives to launch polished digital presences with premium templates and fast deployment.",
+    category: "Portfolio Projects",
     year: "2024",
-    tags: ["Operational Scale", "Faster Launch", "Brand Consistency"],
+    tags: ["Portfolio", "Templates", "Scale"],
+    techStack: ["Next.js", "React", "CMS"],
     image: "/images/project-prism.svg",
     demoUrl: "https://vercel.com",
     githubUrl: "https://github.com",
-    outcome: "800+ sites launched",
+    outcome: "800+ launches",
     accent: "#e879f9",
     featured: true,
   },
   {
     slug: "hr-tracking-system",
-    title: "HR Tracking System",
+    title: "HR Tracking Dashboard",
     description:
-      "An operational hiring system that gives teams full visibility over recruitment — reducing delays, improving coordination, and accelerating better hiring decisions.",
-    category: "Business",
+      "An operational hiring dashboard with pipeline tracking, team coordination, and real-time recruitment analytics.",
+    category: "Dashboards",
     year: "2024",
-    tags: ["HR Operations", "Process Efficiency", "Team Coordination"],
+    tags: ["HR Ops", "Pipeline", "Analytics"],
+    techStack: ["Excel", "Power Query", "Dashboards"],
     image: "/images/project-hr-tracker.svg",
     demoUrl: "#contact",
     githubUrl: "#contact",
-    outcome: "40% faster hiring cycles",
+    outcome: "40% faster hiring",
     accent: "#34d399",
     featured: true,
   },
@@ -233,14 +241,15 @@ export const projects: Project[] = [
     slug: "budget-expense-tracker",
     title: "Budget & Expense Tracker",
     description:
-      "A financial control system that helps businesses plan smarter, track spending in real time, and make informed decisions through clear performance dashboards.",
-    category: "Business",
+      "A financial control dashboard helping businesses plan smarter, track spending in real time, and make informed decisions.",
+    category: "Dashboards",
     year: "2024",
-    tags: ["Financial Control", "Budget Planning", "Smarter Decisions"],
+    tags: ["Finance", "Budgeting", "Reporting"],
+    techStack: ["Excel", "VBA", "Charts"],
     image: "/images/project-budget-tracker.svg",
     demoUrl: "#contact",
     githubUrl: "#contact",
-    outcome: "12hrs saved per month",
+    outcome: "12hrs saved/mo",
     accent: "#fbbf24",
     featured: true,
   },
@@ -338,6 +347,14 @@ export const experience = [
     ],
   },
 ] as const;
+
+export const contactContent = {
+  headline: "Let's Build Something Exceptional",
+  description:
+    "Available for freelance projects, AI-powered websites, dashboards, business websites, and digital experiences.",
+  ctaLabel: "Get In Touch",
+  responseTime: "Typically responds within 48 hours",
+} as const;
 
 export type Testimonial = {
   id: string;
@@ -538,10 +555,10 @@ export const services = [
 ] as const;
 
 export const aboutStory = {
-  headline: "Your partner in digital transformation — not just another developer",
+  headline: "Crafting digital experiences with precision and purpose",
   paragraphs: [
-    "I'm Jayyy — a Digital Solutions Builder who helps businesses grow, automate, organize, and optimize through technology. I work at the intersection of strategy and execution, turning complex challenges into systems that deliver real results.",
-    "Whether you need a modern website, AI-powered automation, Excel business systems, or executive dashboards — I design solutions around your workflows, your data, and your goals.",
-    "My focus is always the same: efficiency, clarity, and measurable impact. Less manual work. Better decisions. Stronger operations. Sustainable growth.",
+    "I'm Jayyy — a creative developer and digital solutions builder who transforms ideas into premium websites, intelligent dashboards, and AI-powered experiences.",
+    "From sleek business websites to data-rich dashboards and automation systems, I design and build digital products that elevate brands and drive measurable growth.",
+    "Every project blends strategy, design, and technology — delivered with agency-level quality and a personal touch.",
   ],
 } as const;

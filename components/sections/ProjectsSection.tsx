@@ -11,11 +11,10 @@ import { staggerFast } from "@/lib/motion";
 
 const categories: ProjectCategory[] = [
   "All",
-  "SaaS",
-  "AI",
-  "Web",
-  "Creative",
-  "Business",
+  "AI Websites",
+  "Business Websites",
+  "Dashboards",
+  "Portfolio Projects",
 ];
 
 export function ProjectsSection() {
@@ -30,9 +29,9 @@ export function ProjectsSection() {
     <SectionWrapper id="projects">
       <SectionChild>
         <SectionHeading
-          eyebrow="Solutions"
-          title="Results that move businesses forward"
-          description="A curated collection of digital solutions — each built to solve real operational challenges, improve decision-making, and deliver measurable business outcomes."
+          eyebrow="Selected Work"
+          title="Projects that define excellence"
+          description="A curated showcase of AI-powered websites, business platforms, dashboards, and portfolio experiences — each crafted with precision and purpose."
         />
       </SectionChild>
 
@@ -45,7 +44,7 @@ export function ProjectsSection() {
             aria-pressed={active === cat}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className={`relative rounded-full px-4 py-2 text-sm font-medium transition ${
+            className={`relative rounded-full px-4 py-2.5 text-sm font-medium transition ${
               active === cat
                 ? "text-black"
                 : "border border-cyan-400/15 text-zinc-400 hover:border-cyan-400/35 hover:text-white"

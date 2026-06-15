@@ -2,12 +2,10 @@ import { DecorativeEffects } from "@/components/DecorativeEffects";
 import { PageTransition } from "@/components/PageTransition";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ContactSection } from "@/components/sections/ContactSection";
-import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { BusinessSystemsSection } from "@/components/sections/BusinessSystemsSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
-import { SkillsSection } from "@/components/sections/SkillsSection";
+import { StatsSection } from "@/components/sections/StatsSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { homeMetadata } from "@/lib/seo";
 
@@ -19,12 +17,10 @@ export default function Home() {
       <main id="main" className="relative overflow-hidden">
         <DecorativeEffects />
         <HeroSection />
+        <StatsSection />
         <AboutSection />
-        <ServicesSection />
-        <BusinessSystemsSection />
         <ProjectsSection />
-        <SkillsSection />
-        <ExperienceSection />
+        <ServicesSection />
         <TestimonialsSection />
         <ContactSection />
       </main>

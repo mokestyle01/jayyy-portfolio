@@ -3,9 +3,8 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/SectionHeading";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { SectionChild, SectionWrapper } from "@/components/ui/SectionWrapper";
-import { aboutStory, images, site, skills, stats } from "@/lib/data";
+import { aboutStory, images, site, skills } from "@/lib/data";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 
 export function AboutSection() {
@@ -16,7 +15,7 @@ export function AboutSection() {
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
-            className="glass gradient-border relative aspect-[4/5] overflow-hidden rounded-3xl"
+            className="glass gradient-border relative aspect-[4/5] overflow-hidden rounded-3xl shadow-[0_0_60px_rgba(34,211,238,0.08)]"
           >
             <Image
               src={images.about}
@@ -25,6 +24,7 @@ export function AboutSection() {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#020208]/80 via-transparent to-cyan-400/5" />
           </motion.div>
         </SectionChild>
 
@@ -49,7 +49,8 @@ export function AboutSection() {
               <motion.li
                 key={s.name}
                 variants={fadeUp}
-                className="glass rounded-full px-4 py-2 text-sm text-zinc-300"
+                whileHover={{ scale: 1.05, y: -2 }}
+                className="glass rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:border-cyan-400/30"
               >
                 {s.name}
               </motion.li>
@@ -57,28 +58,6 @@ export function AboutSection() {
           </motion.ul>
         </div>
       </div>
-
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-40px" }}
-        className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        {stats.map((stat) => (
-          <motion.div
-            key={stat.label}
-            variants={fadeUp}
-            whileHover={{ y: -6 }}
-            className="glass gradient-border rounded-2xl p-6 text-center"
-          >
-            <p className="text-4xl font-bold gradient-text">
-              <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-            </p>
-            <p className="mt-2 text-sm text-zinc-400">{stat.label}</p>
-          </motion.div>
-        ))}
-      </motion.div>
     </SectionWrapper>
   );
 }

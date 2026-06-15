@@ -9,7 +9,7 @@ import {
   type ContactFormData,
   type ContactFormErrors,
 } from "@/lib/contact";
-import { site } from "@/lib/data";
+import { contactContent, site } from "@/lib/data";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -96,20 +96,33 @@ export function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="glass cyber-border-glow gradient-border rounded-2xl p-6 md:p-8"
+      whileHover={{ y: -4 }}
+      className="glass cyber-border-glow gradient-border group relative overflow-hidden rounded-2xl p-6 md:p-8 transition duration-500 hover:shadow-[0_0_50px_rgba(34,211,238,0.1)]"
     >
-      {status === "success" && (
-        <div
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(34,211,238,0.06), transparent 50%, rgba(167,139,250,0.06))",
+        }}
+        aria-hidden
+      />
+      <div className="relative z-10">
+        {status === "success" && (
+        <motion.div
           id={statusId}
           role="status"
           aria-live="polite"
+          initial={{ opacity: 0, scale: 0.95, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
           className="mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4"
         >
-          <p className="font-semibold text-emerald-300">Your inquiry is on its way!</p>
+          <p className="font-semibold text-emerald-300">Message sent successfully!</p>
           <p className="mt-1 text-sm text-emerald-200/80">
-            Thank you — I&apos;ll review your message and respond within 48 hours with next steps.
+            Thank you — I&apos;ll get back to you within 48 hours.
           </p>
-        </div>
+        </motion.div>
       )}
 
       {status === "error" && submitError && (
@@ -219,9 +232,10 @@ export function ContactForm() {
           whileTap={status !== "submitting" ? { scale: 0.98 } : undefined}
           className="w-full rounded-full bg-white py-4 text-sm font-semibold text-black transition hover:shadow-[0_0_30px_rgba(34,211,238,0.25)] disabled:cursor-not-allowed disabled:opacity-60 md:w-auto md:px-10"
         >
-          {status === "submitting" ? "Sending…" : "Start the conversation"}
+          {status === "submitting" ? "Sending…" : contactContent.ctaLabel}
         </motion.button>
-      </form>
+        </form>
+      </div>
     </motion.div>
   );
 }

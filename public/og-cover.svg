@@ -19,8 +19,8 @@
   <rect width="1200" height="630" fill="url(#glow)"/>
   <rect x="80" y="80" width="1040" height="470" rx="24" fill="none" stroke="url(#accent)" stroke-width="1.5" opacity="0.4"/>
   <text x="100" y="280" fill="url(#accent)" font-family="system-ui,sans-serif" font-size="88" font-weight="900" letter-spacing="-2">Jayyy</text>
-  <text x="100" y="360" fill="#f0f0f5" font-family="system-ui,sans-serif" font-size="36" font-weight="600">Digital Solutions Builder</text>
-  <text x="100" y="420" fill="#8b8b9e" font-family="system-ui,sans-serif" font-size="24">Websites � AI Automation � Excel Systems � Dashboards &amp; Reporting</text>
+  <text x="100" y="360" fill="#f0f0f5" font-family="system-ui,sans-serif" font-size="32" font-weight="600">Building AI-Powered Digital Experiences</text>
+  <text x="100" y="420" fill="#8b8b9e" font-family="system-ui,sans-serif" font-size="22">Websites · Dashboards · AI · Premium Digital Solutions</text>
   <rect x="100" y="460" width="320" height="4" fill="url(#accent)" opacity="0.8"/>
-  <text x="100" y="520" fill="#64748b" font-family="system-ui,sans-serif" font-size="18">Grow � Automate � Optimize � Transform</text>
+  <text x="100" y="520" fill="#64748b" font-family="system-ui,sans-serif" font-size="18">Creative Developer Portfolio</text>
 </svg>
