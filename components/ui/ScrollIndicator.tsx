@@ -1,16 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { scrollToSection } from "@/lib/scroll";
 
 export function ScrollIndicator() {
   return (
-    <motion.a
-      href="#about"
+    <motion.button
+      type="button"
+      onClick={() => scrollToSection("about")}
       aria-label="Scroll to about section"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.2, duration: 0.6 }}
-      className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-zinc-500 transition hover:text-white"
+      className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 cursor-pointer flex-col items-center gap-2 border-0 bg-transparent text-zinc-500 transition hover:text-white"
     >
       <span className="text-[10px] font-medium uppercase tracking-[0.3em]">Scroll</span>
       <motion.div
@@ -24,6 +26,6 @@ export function ScrollIndicator() {
           className="h-1.5 w-1 rounded-full bg-white"
         />
       </motion.div>
-    </motion.a>
+    </motion.button>
   );
 }

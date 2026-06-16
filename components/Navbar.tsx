@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   AnimatePresence,
@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { navLinks, site } from "@/lib/data";
 import { ease } from "@/lib/motion";
+import { scrollToSection } from "@/lib/scroll";
 
 const navItemVariants = {
   hidden: { opacity: 0, y: -12 },
@@ -23,6 +24,7 @@ const navItemVariants = {
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -41,17 +43,20 @@ export function Navbar() {
 
   useEffect(() => {
     const sections = navLinks.map((l) => document.getElementById(l.id)).filter(Boolean);
+    if (sections.length === 0) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActiveSection(visible[0].target.id);
       },
-      { rootMargin: "-42% 0px -48% 0px", threshold: 0 },
+      { rootMargin: "-42% 0px -48% 0px", threshold: [0, 0.25, 0.5] },
     );
     sections.forEach((s) => s && observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -63,59 +68,70 @@ export function Navbar() {
   useEffect(() => {
     if (pathname !== "/" || !window.location.hash) return;
     const id = window.location.hash.slice(1);
-    const timer = window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 120);
+    const timer = window.setTimeout(() => scrollToSection(id), 150);
     return () => window.clearTimeout(timer);
   }, [pathname]);
 
   function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
-    setOpen(false);
-    if (pathname !== "/") return;
     e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", `/#${id}`);
+    setOpen(false);
+
+    if (pathname === "/") {
+      scrollToSection(id);
+      return;
+    }
+
+    router.push(`/#${id}`);
   }
 
   return (
     <>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+            onClick={() => setOpen(false)}
+            aria-hidden
+          />
+        )}
+      </AnimatePresence>
+
       <motion.header
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: hidden ? -120 : 0, opacity: 1 }}
+        animate={{ y: hidden && !open ? -120 : 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 280, damping: 30, delay: 0.1 }}
-        className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:px-6 md:pt-5"
+        className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:px-6 md:pt-5"
       >
         <nav
           aria-label="Main navigation"
-          className={`nav-glass nav-float pointer-events-auto w-full max-w-5xl overflow-hidden rounded-2xl border transition-all duration-500 ${
-            scrolled
+          className={`nav-glass nav-float relative w-full max-w-5xl rounded-2xl border transition-all duration-500 ${
+            open ? "overflow-visible" : "overflow-hidden"
+          } ${
+            scrolled || open
               ? "nav-float-scrolled border-cyan-400/25 bg-white/[0.08]"
               : "border-white/10 bg-white/[0.04]"
           }`}
         >
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-cyan-400/[0.04] via-transparent to-violet-500/[0.04]" />
+          <div
+            className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400/[0.04] via-transparent to-violet-500/[0.04]"
+            aria-hidden
+          />
 
-          <div className="relative flex h-[3.75rem] items-center justify-between px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.15, duration: 0.5, ease }}
+          <div className="relative z-10 flex h-[3.75rem] items-center justify-between px-4 md:px-6">
+            <Link
+              href="/#home"
+              onClick={(e) => handleNavClick(e, "home")}
+              className="group relative inline-flex items-center gap-2"
             >
-              <Link
-                href="/#home"
-                onClick={(e) => handleNavClick(e, "home")}
-                className="group relative inline-flex items-center gap-2"
-              >
-                <motion.span
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="text-xl font-black tracking-tight gradient-text md:text-2xl"
-                >
-                  {site.name}
-                </motion.span>
-                <span className="hidden h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] sm:inline-block" />
-              </Link>
-            </motion.div>
+              <span className="text-xl font-black tracking-tight gradient-text md:text-2xl">
+                {site.name}
+              </span>
+              <span className="hidden h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] sm:inline-block" />
+            </Link>
 
             <ul className="hidden items-center gap-1 lg:flex">
               {navLinks.map((link, i) => {
@@ -142,53 +158,41 @@ export function Navbar() {
                           transition={{ type: "spring", stiffness: 400, damping: 32 }}
                         />
                       )}
-                      <motion.span
-                        className="relative z-10"
-                        whileHover={{ y: -1 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                      >
-                        {link.label}
-                      </motion.span>
-                      <span
-                        className={`absolute bottom-1 left-1/2 h-px -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-violet-400 transition-all duration-300 ${
-                          active
-                            ? "w-3/5 opacity-80"
-                            : "w-0 opacity-0 group-hover:w-2/5 group-hover:opacity-60"
-                        }`}
-                      />
+                      <span className="relative z-10">{link.label}</span>
                     </Link>
                   </motion.li>
                 );
               })}
+              <li>
+                <Link
+                  href="/#contact"
+                  onClick={(e) => handleNavClick(e, "contact")}
+                  className="ml-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:scale-105 hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]"
+                >
+                  Get In Touch
+                </Link>
+              </li>
             </ul>
 
-            <motion.button
+            <button
               type="button"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-cyan-400/30 hover:bg-white/10 lg:hidden"
+              className="relative z-20 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-cyan-400/30 hover:bg-white/10 lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
             >
               <div className="flex w-5 flex-col items-center justify-center gap-1.5">
-                <motion.span
-                  animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                  className="block h-0.5 w-full origin-center rounded-full bg-white"
+                <span
+                  className={`block h-0.5 w-full origin-center rounded-full bg-white transition ${open ? "translate-y-2 rotate-45" : ""}`}
                 />
-                <motion.span
-                  animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                  className="block h-0.5 w-full rounded-full bg-white"
+                <span
+                  className={`block h-0.5 w-full rounded-full bg-white transition ${open ? "opacity-0" : ""}`}
                 />
-                <motion.span
-                  animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                  className="block h-0.5 w-full origin-center rounded-full bg-white"
+                <span
+                  className={`block h-0.5 w-full origin-center rounded-full bg-white transition ${open ? "-translate-y-2 -rotate-45" : ""}`}
                 />
               </div>
-            </motion.button>
+            </button>
           </div>
 
           <AnimatePresence>
@@ -197,21 +201,14 @@ export function Navbar() {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="relative overflow-hidden border-t border-white/10 lg:hidden"
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                className="relative z-20 overflow-hidden border-t border-white/10 lg:hidden"
               >
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-cyan-400/5 to-violet-500/5" />
-                <ul className="relative flex flex-col gap-1 px-4 py-4">
-                  {navLinks.map((link, i) => {
+                <ul className="flex flex-col gap-1 px-4 py-4">
+                  {navLinks.map((link) => {
                     const active = activeSection === link.id;
                     return (
-                      <motion.li
-                        key={link.id}
-                        initial={{ opacity: 0, x: -16 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -8 }}
-                        transition={{ delay: i * 0.05, duration: 0.3 }}
-                      >
+                      <li key={link.id}>
                         <Link
                           href={link.href}
                           onClick={(e) => handleNavClick(e, link.id)}
@@ -226,29 +223,24 @@ export function Navbar() {
                             <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
                           )}
                         </Link>
-                      </motion.li>
+                      </li>
                     );
                   })}
+                  <li className="pt-2">
+                    <Link
+                      href="/#contact"
+                      onClick={(e) => handleNavClick(e, "contact")}
+                      className="block rounded-full bg-white px-6 py-3 text-center text-sm font-semibold text-black"
+                    >
+                      Get In Touch
+                    </Link>
+                  </li>
                 </ul>
               </motion.div>
             )}
           </AnimatePresence>
         </nav>
       </motion.header>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
-            onClick={() => setOpen(false)}
-            aria-hidden
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 }

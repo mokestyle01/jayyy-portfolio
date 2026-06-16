@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { contactContent, navLinks, site } from "@/lib/data";
 import { fadeUp, staggerContainer } from "@/lib/motion";
+import { scrollToSection } from "@/lib/scroll";
 
 const socialIcons: Record<keyof typeof site.social, string> = {
   github: "GH",
@@ -17,8 +18,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   function scrollTo(id: string) {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", `/#${id}`);
+    scrollToSection(id);
   }
 
   return (
