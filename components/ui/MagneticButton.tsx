@@ -4,7 +4,13 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef } from "react";
-import { getHashId, isHashHref, isSpecialHref, scrollToSection } from "@/lib/scroll";
+import {
+  getHashId,
+  isHashHref,
+  isSpecialHref,
+  scrollToSection,
+  unlockPageScroll,
+} from "@/lib/scroll";
 
 type MagneticButtonProps = {
   children: React.ReactNode;
@@ -59,16 +65,17 @@ export function MagneticButton({
   }
 
   function handleHashClick(e: React.MouseEvent, targetHref: string) {
+    e.preventDefault();
     const id = getHashId(targetHref);
     if (!id) return;
 
+    unlockPageScroll();
+
     if (pathname === "/") {
-      e.preventDefault();
       scrollToSection(id);
       return;
     }
 
-    e.preventDefault();
     router.push(`/#${id}`);
   }
 
@@ -79,7 +86,7 @@ export function MagneticButton({
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       whileTap={{ scale: 0.96 }}
-      className={`flex w-full cursor-pointer items-center justify-center rounded-full px-8 py-4 text-sm font-semibold transition ${variants[variant]} ${className}`}
+      className={`flex w-full cursor-pointer touch-manipulation items-center justify-center rounded-full px-8 py-4 text-sm font-semibold transition ${variants[variant]} ${className}`}
     >
       {children}
     </motion.div>
@@ -88,7 +95,7 @@ export function MagneticButton({
   if (href) {
     if (external || isSpecialHref(href)) {
       return (
-        <a href={href} className={wrapClass}>
+        <a href={href} className={`${wrapClass} touch-manipulation`}>
           {inner}
         </a>
       );
@@ -99,7 +106,7 @@ export function MagneticButton({
         <a
           href={href.startsWith("#") ? `/${href}` : href}
           onClick={(e) => handleHashClick(e, href)}
-          className={wrapClass}
+          className={`${wrapClass} touch-manipulation`}
         >
           {inner}
         </a>

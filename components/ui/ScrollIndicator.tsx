@@ -12,7 +12,7 @@ export function ScrollIndicator() {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.2, duration: 0.6 }}
-      className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 cursor-pointer flex-col items-center gap-2 border-0 bg-transparent text-zinc-500 transition hover:text-white"
+      className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 cursor-pointer touch-manipulation flex-col items-center gap-2 border-0 bg-transparent text-zinc-500 transition hover:text-white"
     >
       <span className="text-[10px] font-medium uppercase tracking-[0.3em]">Scroll</span>
       <motion.div

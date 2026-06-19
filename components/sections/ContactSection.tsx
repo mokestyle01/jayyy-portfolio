@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { ContactForm } from "@/components/ContactForm";
 import { CopyEmailButton } from "@/components/ui/CopyEmailButton";
@@ -159,12 +158,12 @@ export function ContactSection() {
           >
             <p className="text-sm text-zinc-400">
               Prefer email? Reach out directly at{" "}
-              <Link
+              <a
                 href={`mailto:${site.email}`}
                 className="font-medium text-cyan-300 transition hover:text-white"
               >
                 {site.email}
-              </Link>
+              </a>
             </p>
           </motion.div>
         </motion.div>

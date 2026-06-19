@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -11,7 +10,7 @@ import {
 } from "framer-motion";
 import { navLinks, site } from "@/lib/data";
 import { ease } from "@/lib/motion";
-import { scrollToSection } from "@/lib/scroll";
+import { scrollToSection, unlockPageScroll } from "@/lib/scroll";
 
 const navItemVariants = {
   hidden: { opacity: 0, y: -12 },
@@ -59,9 +58,13 @@ export function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) {
+      unlockPageScroll();
+      return;
+    }
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "";
+      unlockPageScroll();
     };
   }, [open]);
 
@@ -72,43 +75,54 @@ export function Navbar() {
     return () => window.clearTimeout(timer);
   }, [pathname]);
 
-  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
-    e.preventDefault();
-    setOpen(false);
+  const navigateToSection = useCallback(
+    (id: string) => {
+      const menuWasOpen = open;
+      setOpen(false);
+      unlockPageScroll();
 
-    if (pathname === "/") {
-      scrollToSection(id);
-      return;
-    }
+      const go = () => {
+        if (pathname === "/") {
+          scrollToSection(id, menuWasOpen ? 100 : 0);
+          return;
+        }
+        router.push(`/#${id}`);
+      };
 
-    router.push(`/#${id}`);
-  }
+      if (menuWasOpen) {
+        window.setTimeout(go, 100);
+      } else {
+        go();
+      }
+    },
+    [open, pathname, router],
+  );
 
   return (
     <>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
-            onClick={() => setOpen(false)}
-            aria-hidden
-          />
-        )}
-      </AnimatePresence>
-
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: hidden && !open ? -120 : 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 280, damping: 30, delay: 0.1 }}
         className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:px-6 md:pt-5"
       >
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+              onClick={() => setOpen(false)}
+              aria-hidden
+            />
+          )}
+        </AnimatePresence>
+
         <nav
           aria-label="Main navigation"
-          className={`nav-glass nav-float relative w-full max-w-5xl rounded-2xl border transition-all duration-500 ${
+          className={`nav-glass nav-float relative z-50 w-full max-w-5xl rounded-2xl border transition-all duration-500 ${
             open ? "overflow-visible" : "overflow-hidden"
           } ${
             scrolled || open
@@ -122,16 +136,16 @@ export function Navbar() {
           />
 
           <div className="relative z-10 flex h-[3.75rem] items-center justify-between px-4 md:px-6">
-            <Link
-              href="/#home"
-              onClick={(e) => handleNavClick(e, "home")}
-              className="group relative inline-flex items-center gap-2"
+            <button
+              type="button"
+              onClick={() => navigateToSection("home")}
+              className="group relative inline-flex touch-manipulation items-center gap-2 border-0 bg-transparent p-0 text-left"
             >
               <span className="text-xl font-black tracking-tight gradient-text md:text-2xl">
                 {site.name}
               </span>
               <span className="hidden h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] sm:inline-block" />
-            </Link>
+            </button>
 
             <ul className="hidden items-center gap-1 lg:flex">
               {navLinks.map((link, i) => {
@@ -144,10 +158,10 @@ export function Navbar() {
                     animate="visible"
                     variants={navItemVariants}
                   >
-                    <Link
-                      href={link.href}
-                      onClick={(e) => handleNavClick(e, link.id)}
-                      className={`group relative block rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                    <button
+                      type="button"
+                      onClick={() => navigateToSection(link.id)}
+                      className={`group relative block touch-manipulation rounded-full border-0 bg-transparent px-3.5 py-2 text-sm font-medium transition-colors ${
                         active ? "text-white" : "text-zinc-400 hover:text-zinc-100"
                       }`}
                     >
@@ -159,24 +173,24 @@ export function Navbar() {
                         />
                       )}
                       <span className="relative z-10">{link.label}</span>
-                    </Link>
+                    </button>
                   </motion.li>
                 );
               })}
               <li>
-                <Link
-                  href="/#contact"
-                  onClick={(e) => handleNavClick(e, "contact")}
-                  className="ml-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:scale-105 hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]"
+                <button
+                  type="button"
+                  onClick={() => navigateToSection("contact")}
+                  className="ml-2 touch-manipulation rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:scale-105 hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]"
                 >
                   Get In Touch
-                </Link>
+                </button>
               </li>
             </ul>
 
             <button
               type="button"
-              className="relative z-20 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-cyan-400/30 hover:bg-white/10 lg:hidden"
+              className="relative z-20 flex h-10 w-10 touch-manipulation items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-cyan-400/30 hover:bg-white/10 lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
@@ -202,38 +216,38 @@ export function Navbar() {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="relative z-20 overflow-hidden border-t border-white/10 lg:hidden"
+                className="relative z-50 border-t border-white/10 lg:hidden"
               >
                 <ul className="flex flex-col gap-1 px-4 py-4">
                   {navLinks.map((link) => {
                     const active = activeSection === link.id;
                     return (
                       <li key={link.id}>
-                        <Link
-                          href={link.href}
-                          onClick={(e) => handleNavClick(e, link.id)}
-                          className={`flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition ${
+                        <button
+                          type="button"
+                          onClick={() => navigateToSection(link.id)}
+                          className={`flex w-full touch-manipulation items-center justify-between rounded-xl border-0 px-4 py-3 text-left text-base font-medium transition ${
                             active
                               ? "bg-gradient-to-r from-cyan-400/15 to-violet-500/10 text-white ring-1 ring-cyan-400/20"
-                              : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                              : "bg-transparent text-zinc-300 hover:bg-white/5 hover:text-white"
                           }`}
                         >
                           {link.label}
                           {active && (
                             <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
                           )}
-                        </Link>
+                        </button>
                       </li>
                     );
                   })}
                   <li className="pt-2">
-                    <Link
-                      href="/#contact"
-                      onClick={(e) => handleNavClick(e, "contact")}
-                      className="block rounded-full bg-white px-6 py-3 text-center text-sm font-semibold text-black"
+                    <button
+                      type="button"
+                      onClick={() => navigateToSection("contact")}
+                      className="block w-full touch-manipulation rounded-full bg-white px-6 py-3 text-center text-sm font-semibold text-black"
                     >
                       Get In Touch
-                    </Link>
+                    </button>
                   </li>
                 </ul>
               </motion.div>
